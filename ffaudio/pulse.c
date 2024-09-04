@@ -797,4 +797,5 @@ const struct ffaudio_interface ffpulse = {
 	ffpulse_drain,
 	ffpulse_read,
 	NULL,
+	NULL,
 };

@@ -335,4 +335,5 @@ const struct ffaudio_interface ffjack = {
 	ffjack_drain,
 	ffjack_read,
 	NULL,
+	NULL,
 };

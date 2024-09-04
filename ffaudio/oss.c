@@ -389,4 +389,5 @@ const struct ffaudio_interface ffoss = {
 	ffoss_drain,
 	ffoss_read,
 	NULL,
+	NULL,
 };

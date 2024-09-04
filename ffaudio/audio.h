@@ -256,6 +256,9 @@ typedef struct ffaudio_interface {
 	/** WASAPI: user calls this function when 'event_h' signals.
 	This is required for ffaudio to keep track on the buffer's filled data. */
 	void (*signal)(ffaudio_buf *b);
+
+	/** WASAPI: Only implemented for this at the moment - returns the device position from the last read */
+	ffuint64 (*get_device_position)(ffaudio_buf *b);
 } ffaudio_interface;
 
 /** API for direct use */

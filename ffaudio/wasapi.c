@@ -225,6 +225,7 @@ struct ffaudio_buf {
 	ffuint nonblock;
 	ffuint notify_unsync;
 	ffuint user_driven;
+	ffuint64 device_position;
 
 	const char *errfunc;
 	char *errmsg;
@@ -805,7 +806,7 @@ static int wasapi_readonce(ffaudio_buf *b, const void **data)
 	}
 
 	DWORD flags;
-	if (0 != (r = IAudioCaptureClient_GetBuffer(b->capt, &d, &b->n_frames, &flags, NULL, NULL))) {
+	if (0 != (r = IAudioCaptureClient_GetBuffer(b->capt, &d, &b->n_frames, &flags, &b->device_position, NULL))) {
 		if (r == AUDCLNT_S_BUFFER_EMPTY) {
 			return 0;
 		}
@@ -1178,6 +1179,11 @@ static char* wasapi_error(const char *errfunc, ffuint err)
 	return s;
 }
 
+ffuint64 ffwasapi_get_device_position(ffaudio_buf *b)
+{
+	return b->device_position;
+}
+
 
 const struct ffaudio_interface ffwasapi = {
 	ffwasapi_init,
@@ -1200,4 +1206,5 @@ const struct ffaudio_interface ffwasapi = {
 	ffwasapi_drain,
 	ffwasapi_read,
 	ffwasapi_signal,
+	ffwasapi_get_device_position,
 };
